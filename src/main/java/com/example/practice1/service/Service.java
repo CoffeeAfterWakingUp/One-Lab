@@ -37,7 +37,7 @@ public class Service {
 
     public List<Book> getBooksByAuthorName(String authorName) {
         if (authorName == null) {
-            System.out.println();
+            System.out.println("");
         }
         return bookRepository.findBooksByAuthorName(authorName);
     }
