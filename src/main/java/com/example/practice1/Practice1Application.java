@@ -16,14 +16,14 @@ public class Practice1Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Practice1Application.class, args);
-//        service.getAllBooks().forEach(System.out::println);
-//        System.out.println(service.getBookByTitle("Life of Pi"));
-//        System.out.println(service.getBooksByAuthorName("Yann"));
-        //service.getReviewsByBookTitle("The Call of the Wild").forEach(System.out::println);
-        //service.getReviewsByReviewerName("John Smith").forEach(System.out::println);
-        // service.getReviewsByAuthorName("Yann").forEach(System.out::println);
-        //service.getAllAuthors().forEach(System.out::println);
-        //service.getAuthorByName("Yann").forEach(System.out::println);
+        service.getAllBooks().forEach(System.out::println);
+        System.out.println(service.getBookByTitle("Life of Pi"));
+        System.out.println(service.getBooksByAuthorName("Yann"));
+        service.getReviewsByBookTitle("The Call of the Wild").forEach(System.out::println);
+        service.getReviewsByReviewerName("John Smith").forEach(System.out::println);
+         service.getReviewsByAuthorName("Yann").forEach(System.out::println);
+        service.getAllAuthors().forEach(System.out::println);
+        service.getAuthorByName("Yann").forEach(System.out::println);
         System.out.println(service.getAuthorById(2L));
     }
 }
