@@ -21,7 +21,7 @@ public class Practice1Application {
         System.out.println(service.getBooksByAuthorName("Yann"));
         service.getReviewsByBookTitle("The Call of the Wild").forEach(System.out::println);
         service.getReviewsByReviewerName("John Smith").forEach(System.out::println);
-         service.getReviewsByAuthorName("Yann").forEach(System.out::println);
+        service.getReviewsByAuthorName("Yann").forEach(System.out::println);
         service.getAllAuthors().forEach(System.out::println);
         service.getAuthorByName("Yann").forEach(System.out::println);
         System.out.println(service.getAuthorById(2L));
