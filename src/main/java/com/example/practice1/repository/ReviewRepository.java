@@ -1,6 +1,6 @@
 package com.example.practice1.repository;
 
-import com.example.practice1.database.Review;
+import com.example.practice1.entity.Review;
 
 import java.util.List;
 
