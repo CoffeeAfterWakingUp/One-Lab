@@ -1,8 +1,8 @@
 package com.example.practice1.service;
 
-import com.example.practice1.database.Author;
-import com.example.practice1.database.Book;
-import com.example.practice1.database.Review;
+import com.example.practice1.entity.Author;
+import com.example.practice1.entity.Book;
+import com.example.practice1.entity.Review;
 import com.example.practice1.exception.*;
 import com.example.practice1.repository.AuthorRepository;
 import com.example.practice1.repository.BookRepository;
@@ -13,14 +13,22 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
-    private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
-    private final ReviewRepository reviewRepository;
+    private AuthorRepository authorRepository;
+    private BookRepository bookRepository;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    public Service(AuthorRepository authorRepository, BookRepository bookRepository, ReviewRepository reviewRepository) {
+    public void setAuthorRepository(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
+    }
+
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+    }
+
+    @Autowired
+    public void setReviewRepository(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
 
@@ -28,15 +36,15 @@ public class Service {
         return bookRepository.findAll();
     }
 
-    public Book getBookByTitle(String title) {
+    public List<Book> getBooksByTitle(String title) {
         if (title == null) {
             throw new BookIsNullException("Book Title is null");
         }
-        Book book = bookRepository.findByTitle(title);
-        if(book == null) {
+        List<Book> books = bookRepository.findByTitle(title);
+        if (books.isEmpty()) {
             throw new BookNotFoundException("Book with title " + title + " not found");
         }
-        return book;
+        return books;
     }
 
     public List<Book> getBooksByAuthorName(String authorName) {
@@ -44,10 +52,17 @@ public class Service {
             throw new BookIsNullException("Author Name is null");
         }
         List<Book> books = bookRepository.findBooksByAuthorName(authorName);
-        if(books.isEmpty()) {
+        if (books.isEmpty()) {
             throw new BookNotFoundException("Books with author " + authorName + " not found");
         }
         return books;
+    }
+
+    public List<Book> getBooksByAuthorId(Long id) {
+        if (id == null) {
+            throw new AuthorIsNullException("Id is null");
+        }
+        return bookRepository.findBooksByAuthorId(id);
     }
 
     public List<Review> getReviewsByReviewerName(String reviewerName) {
@@ -55,7 +70,7 @@ public class Service {
             throw new ReviewIsNullException("Reviewer Name is null");
         }
         List<Review> reviews = reviewRepository.findByReviewerName(reviewerName);
-        if(reviews.isEmpty()) {
+        if (reviews.isEmpty()) {
             throw new ReviewNotFoundException("Review with reviewer name " + reviewerName + " not found");
         }
         return reviews;
@@ -66,7 +81,7 @@ public class Service {
             throw new ReviewIsNullException("Book title is null");
         }
         List<Review> reviews = reviewRepository.findByBookTitle(bookTitle);
-        if(reviews.isEmpty()) {
+        if (reviews.isEmpty()) {
             throw new ReviewNotFoundException("Review with book title " + bookTitle + " not found");
         }
         return reviews;
@@ -77,7 +92,7 @@ public class Service {
             throw new ReviewIsNullException("Author name is null");
         }
         List<Review> reviews = reviewRepository.findByAuthorName(authorName);
-        if(reviews.isEmpty()) {
+        if (reviews.isEmpty()) {
             throw new ReviewNotFoundException("Review with author name " + authorName + " not found");
         }
         return reviews;
@@ -92,7 +107,7 @@ public class Service {
             throw new AuthorIsNullException("Name is null");
         }
         List<Author> authors = authorRepository.findByName(name);
-        if(authors.isEmpty()) {
+        if (authors.isEmpty()) {
             throw new AuthorNotFoundException("Author with name " + name + " not found");
         }
         return authors;
@@ -102,10 +117,17 @@ public class Service {
         if (id == null) {
             throw new AuthorIsNullException("Id is null");
         }
-        Author author =  authorRepository.findById(id);
-        if(author == null) {
+        Author author = authorRepository.findById(id);
+        if (author == null) {
             throw new AuthorNotFoundException("Author with id " + id + " not found");
         }
         return author;
+    }
+
+    public List<Author> getAuthorsByBookId(Long id) {
+        if (id == null) {
+            throw new BookIsNullException("Id is null");
+        }
+        return authorRepository.findAuthorsByBookId(id);
     }
 }
