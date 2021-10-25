@@ -23,18 +23,19 @@ public class Practice1Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(service.getAllAuthors());
-        System.out.println(service.getAuthorByName("Stephen"));
-        System.out.println(service.getAuthorById(5L));
-        System.out.println("------------------------------------");
-        System.out.println(service.getBooksByAuthorId(9L));
-        System.out.println(service.getBooksByAuthorName("Stephen"));
-        System.out.println(service.getBooksByTitle("The Talisman"));
-        System.out.println(service.getAllBooks());
-        System.out.println("------------------------------------");
-        System.out.println(service.getReviewsByAuthorName("Stephen"));
-        System.out.println(service.getReviewsByBookTitle("The Talisman"));
-        System.out.println(service.getReviewsByReviewerName("John Smith"));
+        service.getAllAuthors();
+        service.getAuthorByName("Stephen");
+        service.getAuthorById(5L);
+        service.getBooksByAuthorId(9L);
+        service.getBooksByAuthorName("Stephen");
+        service.getBooksByTitle("The Talisman");
+        service.getAllBooks();
+        service.getReviewsByAuthorName("Stephen");
+        service.getReviewsByBookTitle("The Talisman");
+        service.getReviewsByReviewerName("John Smith");
+        service.getAuthorsByBookId(9L);
+        //service.getAuthorsByBookId(null).forEach(System.out::println);
+        //service.getBooksByAuthorId(null);
 
     }
 }
