@@ -125,9 +125,6 @@ public class Service {
     }
 
     public List<Author> getAuthorsByBookId(Long id) {
-        if (id == null) {
-            throw new BookIsNullException("Id is null");
-        }
         return authorRepository.findAuthorsByBookId(id);
     }
 }
