@@ -6,18 +6,20 @@ import com.example.practice1.exception.ReviewNotFoundException;
 import com.example.practice1.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class ReviewService {
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Review> getReviewsByReviewerName(String reviewerName) {
         if (reviewerName == null) {
             throw new ReviewIsNullException("Reviewer Name is null");
@@ -29,6 +31,7 @@ public class ReviewService {
         return reviews;
     }
 
+    @Transactional(readOnly = true)
     public List<Review> getReviewsByBookTitle(String bookTitle) {
         if (bookTitle == null) {
             throw new ReviewIsNullException("Book title is null");
@@ -40,6 +43,7 @@ public class ReviewService {
         return reviews;
     }
 
+    @Transactional(readOnly = true)
     public List<Review> getReviewsByAuthorName(String authorName) {
         if (authorName == null) {
             throw new ReviewIsNullException("Author name is null");

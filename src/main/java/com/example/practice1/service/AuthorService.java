@@ -14,18 +14,19 @@ import java.util.Optional;
 @Service
 public class AuthorService {
 
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Author> getAllAuthors() {
         return (List<Author>) authorRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Author> getAuthorByName(String name) {
         if (name == null) {
             throw new AuthorIsNullException("Name is null");
@@ -37,6 +38,7 @@ public class AuthorService {
         return authors;
     }
 
+    @Transactional(readOnly = true)
     public Author getAuthorById(Long id) {
         if (id == null) {
             throw new AuthorIsNullException("Id is null");
@@ -48,7 +50,7 @@ public class AuthorService {
         return optAuthor.get();
     }
 
-
+    @Transactional(readOnly = true)
     public List<Author> getAuthorsByBookId(Long bookId) {
         return authorRepository.findAuthorsByBookId(bookId);
     }
