@@ -30,6 +30,12 @@ public class Review {
     @JoinColumn(name = "BOOK_ID", nullable = false)
     private Book book;
 
+    public Review(Long id, String reviewerName, Integer rating) {
+        this.id = id;
+        this.reviewerName = reviewerName;
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Review{" +

@@ -42,6 +42,12 @@ public class Book {
         ADVENTURE, CLASSICS, HORROR, DETECTIVE, FANTASY
     }
 
+    public Book(Long id, String title, Genre genre) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
