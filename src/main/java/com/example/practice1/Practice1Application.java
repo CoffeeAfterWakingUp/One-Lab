@@ -1,5 +1,7 @@
 package com.example.practice1;
 
+import com.example.practice1.entity.Author;
+import com.example.practice1.kafka.KafkaProducer;
 import com.example.practice1.service.AuthorService;
 import com.example.practice1.service.BookService;
 import com.example.practice1.service.ReviewService;
@@ -16,13 +18,18 @@ public class Practice1Application implements CommandLineRunner {
     private static BookService bookService;
     private static ReviewService reviewService;
 
+    private static KafkaProducer kafkaProducer;
+
 
     @Autowired
-    public Practice1Application(AuthorService authorService, BookService bookService, ReviewService reviewService) {
+    public Practice1Application(AuthorService authorService, BookService bookService, ReviewService reviewService, KafkaProducer kafkaProducer) {
         Practice1Application.authorService = authorService;
         Practice1Application.bookService = bookService;
         Practice1Application.reviewService = reviewService;
+        Practice1Application.kafkaProducer = kafkaProducer;
     }
+
+
 
 
     public static void main(String[] args) {
@@ -31,9 +38,9 @@ public class Practice1Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        runAuthorServiceMethods();
-        runBookServiceMethods();
-        runReviewServiceMethods();
+        Long id = 1L;
+        Author author = authorService.getAuthorById(id);
+        kafkaProducer.sendAuthor(id, author.toString());
     }
 
     private void runAuthorServiceMethods() {
