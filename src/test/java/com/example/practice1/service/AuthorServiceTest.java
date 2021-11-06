@@ -4,22 +4,24 @@ import com.example.practice1.entity.Author;
 import com.example.practice1.exception.AuthorIsNullException;
 import com.example.practice1.exception.AuthorNotFoundException;
 import com.example.practice1.repository.AuthorRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+
+@ExtendWith(MockitoExtension.class)
 class AuthorServiceTest {
     @Mock
     AuthorRepository authorRepository;
@@ -27,10 +29,6 @@ class AuthorServiceTest {
     @InjectMocks
     AuthorService ut;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     void testGetAllAuthors() {
@@ -116,7 +114,64 @@ class AuthorServiceTest {
         when(authorRepository.findAuthorsByBookId(anyLong())).thenReturn(authors);
         List<Author> result = ut.getAuthorsByBookId(11L);
         assertEquals(result, authors);
+    }
 
+    @Test
+    void testCreateAuthor() {
+        Author author = new Author(null, "Author", "Author");
+        when(authorRepository.save(author)).thenReturn(author);
+        Author result = ut.createAuthor(author);
+        assertEquals(author, result);
+    }
+
+    @Test
+    void givenAuthorIsNull_whenCallingCreateAuthor_thenShouldThrowAuthorIsNullException() {
+        Exception exception = assertThrows(AuthorIsNullException.class, () -> ut.createAuthor(null));
+
+        String expectedMessage = "Author Is null";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+
+    }
+
+    @Test
+    void givenAuthorIsNull_whenCallingUpdateAuthor_thenShouldThrowAuthorIsNullException() {
+        Exception exception = assertThrows(AuthorIsNullException.class, () -> ut.updateAuthor(null, 0L));
+
+        String expectedMessage = "Author Is null";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+
+    }
+
+    @Test
+    void givenIdIsNull_whenCallingUpdateAuthor_thenShouldThrowAuthorIsNullException() {
+        Exception exception = assertThrows(AuthorIsNullException.class, () -> ut.deleteAuthor(null));
+
+        String expectedMessage = "Id is null";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+
+    }
+
+    @Test
+    void testUpdateAuthor() {
+        Author author = new Author(0L, "Author", "Author");
+        when(authorRepository.save(author)).thenReturn(author);
+        Author result = ut.createAuthor(author);
+        assertEquals(author, result);
+    }
+
+    @Test
+    void testDeleteAuthor() {
+        Long id = 0L;
+        when(authorRepository.findById(id)).thenReturn(Optional.of(new Author()));
+        doNothing().when(authorRepository).deleteById(id);
+        ut.deleteAuthor(id);
+        verify(authorRepository, times(1)).deleteById(id);
     }
 }
 

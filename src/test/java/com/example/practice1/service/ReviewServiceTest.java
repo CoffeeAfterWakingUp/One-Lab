@@ -4,11 +4,11 @@ import com.example.practice1.entity.Review;
 import com.example.practice1.exception.ReviewIsNullException;
 import com.example.practice1.exception.ReviewNotFoundException;
 import com.example.practice1.repository.ReviewRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
     @Mock
     ReviewRepository reviewRepository;
@@ -25,10 +26,6 @@ class ReviewServiceTest {
     @InjectMocks
     ReviewService ut;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     void testGetReviewsByReviewerName() {
