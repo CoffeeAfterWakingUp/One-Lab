@@ -1,5 +1,6 @@
 package com.example.practice1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,11 +28,13 @@ public class Author {
     @Column(name = "SURNAME", length = 25, nullable = false)
     private String surname;
 
+
     @ManyToMany
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
     public Author(Long id, String name, String surname) {

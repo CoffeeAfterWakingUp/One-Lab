@@ -31,6 +31,7 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
+
     @ManyToMany
     @JoinTable(
             name = "book_author",
