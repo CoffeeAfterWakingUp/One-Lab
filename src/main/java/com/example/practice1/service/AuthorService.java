@@ -55,4 +55,26 @@ public class AuthorService {
         return authorRepository.findAuthorsByBookId(bookId);
     }
 
+    public Author createAuthor(Author author) {
+        if (author == null) {
+            throw new AuthorIsNullException("Author Is null");
+        }
+        return authorRepository.save(author);
+    }
+
+    public Author updateAuthor(Author author, Long id) {
+        if (author == null) {
+            throw new AuthorIsNullException("Author Is null");
+        }
+        getAuthorById(id);
+        return authorRepository.save(author);
+    }
+
+    public void deleteAuthor(Long id) {
+        if (id == null) {
+            throw new AuthorIsNullException("Id is null");
+        }
+        getAuthorById(id);
+        authorRepository.deleteById(id);
+    }
 }
