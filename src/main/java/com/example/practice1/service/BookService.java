@@ -32,7 +32,7 @@ public class BookService {
         }
         List<Book> books = bookRepository.findByTitle(title);
         if (books.isEmpty()) {
-            throw new BookNotFoundException("Book with title " + title + " not found");
+            throw new BookNotFoundException("No Book with title " + title);
         }
         return books;
     }
@@ -44,7 +44,7 @@ public class BookService {
         }
         List<Book> books = bookRepository.findBooksByAuthorName(authorName);
         if (books.isEmpty()) {
-            throw new BookNotFoundException("Books with author " + authorName + " not found");
+            throw new BookNotFoundException("No Books with author " + authorName);
         }
         return books;
     }

@@ -48,7 +48,7 @@ class AuthorRestControllerTest {
     @Test
     void givenWrongId_whenGetAuthorById_thenShouldThrowAuthorNotFoundException() throws Exception {
         String wrongId = "1221";
-        String expectedExceptionMessage = "Author with id " + wrongId + " not found";
+        String expectedExceptionMessage = "No Author with id " + wrongId;
         this.mockMvc.perform(get("/api/authors/" + wrongId))
                 .andDo(print())
                 .andExpect(status().isNotFound())

@@ -63,7 +63,7 @@ class BookServiceTest {
         String wrongBookTitle = "Asasasa";
         Exception exception = assertThrows(BookNotFoundException.class, () -> ut.getBooksByTitle(wrongBookTitle));
 
-        String expectedMessage = "Book with title " + wrongBookTitle + " not found";
+        String expectedMessage = "No Book with title " + wrongBookTitle;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
@@ -94,7 +94,7 @@ class BookServiceTest {
         String wrongAuthorName = "Abaaac";
         Exception exception = assertThrows(BookNotFoundException.class, () -> ut.getBooksByAuthorName(wrongAuthorName));
 
-        String expectedMessage = "Books with author " + wrongAuthorName + " not found";
+        String expectedMessage = "No Books with author " + wrongAuthorName;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);

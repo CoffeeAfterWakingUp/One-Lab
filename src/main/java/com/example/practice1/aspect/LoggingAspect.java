@@ -18,6 +18,7 @@ public class LoggingAspect {
 
     @Pointcut("execution(public * com.example.practice1.rest..*.*(..))")
     private void controllerPointcut() {
+        // As a general rule, the @Pointcut annotated method must have an empty method body and must not have any throws clause.
     }
 
     @Before("controllerPointcut()")
@@ -36,8 +37,8 @@ public class LoggingAspect {
         log.info("remote address: {}", remoteAddr);
         log.info("remote user: {}", request.getRemoteUser());
         log.info("request URI: {}", requestURI);
-        log.info("controller: {}", jp.getTarget().getClass());
-        log.info("method signature: {}", jp.getSignature());
+        logInfoControllerClass(jp);
+        logInfoMethodSignature(jp);
         log.info("method type: {}", method);
         log.info("request parameters: {}", jsonString);
         log.info("--- request information -------");
@@ -56,8 +57,8 @@ public class LoggingAspect {
 
 
         log.info("--- response information -------");
-        log.info("controller: {}", jp.getTarget().getClass());
-        log.info("method signature: {}", jp.getSignature());
+        logInfoControllerClass(jp);
+        logInfoMethodSignature(jp);
         log.info("Status: {}", status);
         headerNames.forEach(h -> log.info("Header: {}-{}", h, response.getHeaders(h)));
         log.info("Returning value: {}", val);
@@ -68,10 +69,18 @@ public class LoggingAspect {
     @AfterThrowing(value = "controllerPointcut()", throwing = "ex")
     public void logControllerAfterThrowingException(JoinPoint jp, Exception ex) {
         log.info("--- response throw exception information -------");
-        log.info("controller: {}", jp.getTarget().getClass());
-        log.info("method signature: {}", jp.getSignature());
+        logInfoControllerClass(jp);
+        logInfoMethodSignature(jp);
         log.info("args: {}", jp.getArgs());
         log.info("Ex: {}", ex.toString());
         log.info("--- response throw exception information -------");
+    }
+
+    private void logInfoMethodSignature(JoinPoint jp) {
+        log.info("method signature: {}", jp.getSignature());
+    }
+
+    private void logInfoControllerClass(JoinPoint jp) {
+        log.info("controller: {}", jp.getTarget().getClass());
     }
 }

@@ -66,7 +66,7 @@ class AuthorServiceTest {
     void givenFoundAuthorsIsEmpty_callingGetAuthorByName_when_shouldThrowAuthorNotFoundException() {
         Exception exception = assertThrows(AuthorNotFoundException.class, () -> ut.getAuthorByName("Maya"));
 
-        String expectedMessage = "Author with name Maya not found";
+        String expectedMessage = "No Author with name Maya";
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
@@ -100,7 +100,7 @@ class AuthorServiceTest {
         Long wrongAuthorId = 45L;
         Exception exception = assertThrows(AuthorNotFoundException.class, () -> ut.getAuthorById(wrongAuthorId));
 
-        String expectedMessage = "Author with id " + wrongAuthorId + " not found";
+        String expectedMessage = "No Author with id " + wrongAuthorId;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);

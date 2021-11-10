@@ -53,7 +53,7 @@ class ReviewServiceTest {
         String wrongReviewerName = "Wrong Reviewer";
         Exception exception = assertThrows(ReviewNotFoundException.class, () -> ut.getReviewsByReviewerName(wrongReviewerName));
 
-        String expectedMessage = "Review with reviewer name " + wrongReviewerName + " not found";
+        String expectedMessage = "No Review with reviewer name " + wrongReviewerName;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
@@ -85,7 +85,7 @@ class ReviewServiceTest {
         String wrongBookTitle = "Wrong Title";
         Exception exception = assertThrows(ReviewNotFoundException.class, () -> ut.getReviewsByBookTitle(wrongBookTitle));
 
-        String expectedMessage = "Review with book title " + wrongBookTitle + " not found";
+        String expectedMessage = "No Review with book title " + wrongBookTitle;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
@@ -116,7 +116,7 @@ class ReviewServiceTest {
         String wrongAuthor = "Wrong Author Name";
         Exception exception = assertThrows(ReviewNotFoundException.class, () -> ut.getReviewsByAuthorName(wrongAuthor));
 
-        String expectedMessage = "Review with author name " + wrongAuthor + " not found";
+        String expectedMessage = "No Review with author name " + wrongAuthor;
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);

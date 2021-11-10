@@ -33,21 +33,15 @@ public class AuthorService {
         }
         List<Author> authors = authorRepository.findByName(name);
         if (authors.isEmpty()) {
-            throw new AuthorNotFoundException("Author with name " + name + " not found");
+            throw new AuthorNotFoundException("No Author with name " + name);
         }
         return authors;
     }
 
     @Transactional(readOnly = true)
     public Author getAuthorById(Long id) {
-        if (id == null) {
-            throw new AuthorIsNullException("Id is null");
-        }
-        Optional<Author> optAuthor = authorRepository.findById(id);
-        if (optAuthor.isEmpty()) {
-            throw new AuthorNotFoundException("Author with id " + id + " not found");
-        }
-        return optAuthor.get();
+        checkAuthorId(id);
+        return checkAuthorById(id);
     }
 
     @Transactional(readOnly = true)
@@ -56,25 +50,41 @@ public class AuthorService {
     }
 
     public Author createAuthor(Author author) {
-        if (author == null) {
-            throw new AuthorIsNullException("Author Is null");
-        }
+        checkAuthor(author);
         return authorRepository.save(author);
     }
 
     public Author updateAuthor(Author author, Long id) {
-        if (author == null) {
-            throw new AuthorIsNullException("Author Is null");
-        }
-        getAuthorById(id);
+        checkAuthor(author);
+        checkAuthorId(id);
+        checkAuthorById(id);
         return authorRepository.save(author);
     }
 
     public void deleteAuthor(Long id) {
-        if (id == null) {
+        checkAuthorId(id);
+        checkAuthorById(id);
+        authorRepository.deleteById(id);
+    }
+
+
+    private void checkAuthor(Author author) {
+        if (author == null) {
+            throw new AuthorIsNullException("Author Is null");
+        }
+    }
+
+    private void checkAuthorId(Long authorId) {
+        if (authorId == null) {
             throw new AuthorIsNullException("Id is null");
         }
-        getAuthorById(id);
-        authorRepository.deleteById(id);
+    }
+
+    private Author checkAuthorById(Long id) {
+        Optional<Author> optAuthor = authorRepository.findById(id);
+        if (optAuthor.isEmpty()) {
+            throw new AuthorNotFoundException("No Author with id " + id);
+        }
+        return optAuthor.get();
     }
 }

@@ -26,7 +26,7 @@ public class ReviewService {
         }
         List<Review> reviews = reviewRepository.findByReviewerName(reviewerName);
         if (reviews.isEmpty()) {
-            throw new ReviewNotFoundException("Review with reviewer name " + reviewerName + " not found");
+            throw new ReviewNotFoundException("No Review with reviewer name " + reviewerName);
         }
         return reviews;
     }
@@ -38,7 +38,7 @@ public class ReviewService {
         }
         List<Review> reviews = reviewRepository.findByBookTitle(bookTitle);
         if (reviews.isEmpty()) {
-            throw new ReviewNotFoundException("Review with book title " + bookTitle + " not found");
+            throw new ReviewNotFoundException("No Review with book title " + bookTitle);
         }
         return reviews;
     }
@@ -50,7 +50,7 @@ public class ReviewService {
         }
         List<Review> reviews = reviewRepository.findByAuthorName(authorName);
         if (reviews.isEmpty()) {
-            throw new ReviewNotFoundException("Review with author name " + authorName + " not found");
+            throw new ReviewNotFoundException("No Review with author name " + authorName);
         }
         return reviews;
     }
